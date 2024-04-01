@@ -1,1 +1,3 @@
-# Meta-Continual-Learning-Revisited-ICLR2024-
+# Official Implementation of Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction (ICLR2024)
+
+## The code will made avaiable this week (Before April 7th)
