@@ -1,0 +1,76 @@
+# Copyright 2020-present, Pietro Buzzega, Matteo Boschini, Angelo Porrello, Davide Abati, Simone Calderara.
+# All rights reserved.
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+import torch
+from utils.buffer import Buffer
+from utils.args import *
+from models.utils.continual_model import ContinualModel
+import numpy as np
+np.random.seed(0)
+
+def get_parser() -> ArgumentParser:
+    parser = ArgumentParser(description='Continual learning via'
+                                        ' Experience Replay.')
+    add_management_args(parser)
+    add_experiment_args(parser)
+    add_rehearsal_args(parser)
+    return parser
+
+
+
+
+
+
+
+class er_mask(ContinualModel):
+    NAME = 'er_mask'
+    COMPATIBILITY = ['class-il', 'domain-il', 'task-il', 'general-continual']
+
+    def __init__(self, backbone, loss, args, transform, task_id):
+        super(er_mask, self).__init__(backbone, loss, args, transform)
+        self.buffer = Buffer(self.args.buffer_size, self.device)
+
+
+    def compute_offsets(self, task):
+        offset1 = task * self.nc_per_task
+        offset2 = (task + 1) * self.nc_per_task
+        return int(offset1), int(offset2)
+            
+    def take_multitask_loss(self, bt, logits, y):
+        loss = 0.0
+        for i, ti in enumerate(bt):
+            offset1, offset2 = self.compute_offsets(ti)
+            loss += self.loss(logits[i, offset1:offset2].unsqueeze(0), y[i].unsqueeze(0)-offset1)
+        return loss/len(bt)
+
+    def observe(self, inputs, labels, not_aug_inputs,t):
+        M = 10
+        real_batch_size = inputs.shape[0]
+        real_batch_size = int(np.random.randint(1, min(M, real_batch_size), size=1))
+        perm = torch.randperm(real_batch_size)
+        inputs, labels = inputs[perm], torch.tensor(labels[perm],dtype=torch.long)
+        not_aug_inputs = not_aug_inputs[perm]
+
+
+        self.opt.zero_grad()
+        if not self.buffer.is_empty():
+            buf_inputs, buf_labels, buf_id = self.buffer.get_data(
+                self.args.minibatch_size, transform=self.transform)
+            inputs = torch.cat((inputs, buf_inputs))
+            labels = torch.cat((labels, buf_labels))
+            buf_id = torch.cat((task_id*torch.ones_like(labels),buf_id))
+
+        outputs = self.net(inputs)
+        loss = self.take_multitask_loss(buf_id, outputs, labels)
+
+        loss = self.loss(outputs, labels)
+        loss.backward()
+        self.opt.step()
+
+        self.buffer.add_data(examples=not_aug_inputs,
+                             labels=labels[:real_batch_size],
+                             task_labels=task_id*torch.ones_like(labels))
+
+        return loss.item()
