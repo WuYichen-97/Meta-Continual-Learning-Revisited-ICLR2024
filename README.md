@@ -23,12 +23,13 @@ The requiring environment is as bellow:
 - PyTorch/ Torchvision
 
 
-## Running our method on benchmark datasets (CIFAR-100/TinyImageNet).
+## Running our method on benchmark datasets (CIFAR-10/100 & TinyImageNet).
 Here is an example:
 ```bash
 cd utils
 python3 main.py --model vrmcl --dataset seq-cifar100 --n_epochs 1 --grad_clip_norm 1 --buffer_size 1000 --batch_size 32 --replay_batch_size 32 --lr 0.25 --alpha_init 0.1 --seed 0 --asyn_update --second_order --meta_update_per_batch 1 --inner_batch_size 8 --s_momentum 0.15 --s_lr 0.35
 python3 main.py --model vrmcl --dataset seq-tinyimg --n_epochs 1 --grad_clip_norm 1 --buffer_size 1000 --batch_size 32 --replay_batch_size 32 --lr 0.25 --alpha_init 0.1 --seed 0 --asyn_update --second_order --meta_update_per_batch 1 --inner_batch_size 8 --s_momentum 0.15 --s_lr 0.35
+python3 main.py --model vrmcl --dataset seq-cifar10 --n_epochs 1 --grad_clip_norm 1 --buffer_size 1000 --batch_size 32 --replay_batch_size 32 --lr 0.25 --alpha_init 0.1 --seed 0 --asyn_update --second_order --meta_update_per_batch 1 --inner_batch_size 8 --s_momentum 0.25 --s_lr 0.25
 ```
 
 The default network structure is Reduced-Resnet18
