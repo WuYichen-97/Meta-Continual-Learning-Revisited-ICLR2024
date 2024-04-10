@@ -1,6 +1,6 @@
 
 # Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction 
-ICLR'24: Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction  (Official Pytorch implementation).  
+ICLR'24 (Oral): Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction  (Official Pytorch implementation).  
 
 
 
