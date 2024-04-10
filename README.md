@@ -20,8 +20,7 @@ The requiring environment is as bellow:
 
 - Linux 
 - Python 3+
-- PyTorch 0.4.0 
-- Torchvision 0.2.0
+- PyTorch/ Torchvision
 
 
 ## Running our method on benchmark datasets (CIFAR-100 and TinyImageNet).
