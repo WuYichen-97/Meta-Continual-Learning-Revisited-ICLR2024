@@ -1,3 +1,41 @@
-# Official Implementation of Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction (ICLR2024 Oral presentation)
+# Official Implementation of Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction (ICLR2024)
 
-## The code will made avaiable this week (Before April 10th)
+# Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction 
+ICLR'24: Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction  (Official Pytorch implementation).  
+
+
+
+If you find this code useful in your research then please cite  
+```bash
+@inproceedings{wu2023meta,
+  title={Meta Continual Learning Revisited: Implicitly Enhancing Online Hessian Approximation via Variance Reduction},
+  author={Wu, Yichen and Huang, Long-Kai and Wang, Renzhen and Meng, Deyu and Wei, Ying},
+  booktitle={The Twelfth International Conference on Learning Representations},
+  year={2024}
+}
+``` 
+
+
+## Setups
+The requiring environment is as bellow:  
+
+- Linux 
+- Python 3+
+- PyTorch 0.4.0 
+- Torchvision 0.2.0
+
+
+## Running our method on benchmark datasets (CIFAR-100 and TinyImageNet).
+Here is an example:
+```bash
+cd utils
+python3 main.py --model vrmcl --dataset seq-cifar100 --n_epochs 1 --grad_clip_norm 1 --buffer_size 1000 --batch_size 32 --replay_batch_size 32 --lr 0.25 --alpha_init 0.1 --seed 0 --asyn_update --second_order --meta_update_per_batch 1 --inner_batch_size 8 --s_momentum 0.15 --s_lr 0.35
+python3 main.py --model vrmcl --dataset seq-tinyimg --n_epochs 1 --grad_clip_norm 1 --buffer_size 1000 --batch_size 32 --replay_batch_size 32 --lr 0.25 --alpha_init 0.1 --seed 0 --asyn_update --second_order --meta_update_per_batch 1 --inner_batch_size 8 --s_momentum 0.15 --s_lr 0.35
+```
+
+The default network structure is Reduced-Resnet18
+
+
+## Acknowledgements
+We thank the Pytorch Continual Learning framework *Mammoth*(https://github.com/aimagelab/mammoth)
+
