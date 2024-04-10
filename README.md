@@ -23,7 +23,7 @@ The requiring environment is as bellow:
 - PyTorch/ Torchvision
 
 
-## Running our method on benchmark datasets (CIFAR-100 and TinyImageNet).
+## Running our method on benchmark datasets (CIFAR-100/TinyImageNet).
 Here is an example:
 ```bash
 cd utils
