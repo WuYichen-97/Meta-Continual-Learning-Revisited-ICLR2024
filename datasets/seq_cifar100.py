@@ -5,7 +5,7 @@
 
 from torchvision.datasets import CIFAR100
 import torchvision.transforms as transforms
-# from backbone.ResNet18_MAML import resnet18_maml
+from backbone.ResNet18_MAML import resnet18_maml
 # from backbone.ResNet18 import resnet18
 from backbone.ResNet18_obc import resnet18
 # from backbone.Pretrained_ResNet18 import ResNet18
