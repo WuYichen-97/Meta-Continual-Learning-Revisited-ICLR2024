@@ -145,7 +145,7 @@ class VRMCL(ContinualModel):
             else:
                 _, offset2 = self.compute_offsets(task_id)
                 offset1 = 0
-                loss += 0.5*self.loss(logits[i, offset1:offset2].unsqueeze(0), y[i].unsqueeze(0)-offset1)
+                loss += 0.4*self.loss(logits[i, offset1:offset2].unsqueeze(0), y[i].unsqueeze(0)-offset1)
         return loss/len(bt)
 
     def meta_loss_compute(self, x, y, bt, t, j,y_logits=None):
